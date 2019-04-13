@@ -1,5 +1,7 @@
 import jieba
 import wordcloud
+import multiprocessing as mp
+import time
 def Count(txt,str1,str2,str3):
     txt=open('%s'%txt,'rb').read()
     words=jieba.lcut(txt)
@@ -34,6 +36,13 @@ def output():
         w = wordcloud.WordCloud(width=1000, font_path='C:\Windows\Fonts\msyh.ttf', height=700)
         w.generate(" ".join(jieba.lcut(res)))
         w.to_file("wordcloud.png")
-        Count('C:\Python\Douban\Douban\comment.txt', '的', '也', '太')
+        # Count('C:\Python\Douban\Douban\comment.txt', '的', '也', '太')
 
-output()
+if __name__=='__main__':
+    p1=mp.Process(target=output)
+    p2=mp.Process(target=Count,args=('C:\Python\Douban\Douban\comment.txt','的', '也', '太'))
+    p1.start()
+    p2.start()
+    p1.join()
+    p2.join()
+    print(time.clock())
