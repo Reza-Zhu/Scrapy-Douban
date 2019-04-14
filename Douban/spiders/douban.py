@@ -30,11 +30,10 @@ class DoubanSpider(scrapy.Spider):
             '__utma': '223695111.690157687.1555117412.1555138758.1555141460.4'}
     num=0
     def start_requests(self):
-
         for i in range(20):
             url=self.url_1+str(self.num)+self.url_2
             self.num = self.num + 20
-            yield Request(url,cookies=self.Cookie,callback=self.parse)
+            yield Request(url,cookies=self.Cookie,callback=self.parse)##返回值，并传递给parse
         # yield Request('',self.parse())
     def parse(self, response):
         if not os.path.exists(self.path):
